@@ -26,6 +26,7 @@
       "rust-src"
       "rustc"
       "rustfmt"
+      "rust-analyzer"
     ];
   in
   {
@@ -39,6 +40,8 @@
         pkgs.wayland
         pkgs.udev
         pkgs.alsa-lib
+        pkgs.bacon
+        pkgs.gemini-cli-bin
       ];
 
       LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
