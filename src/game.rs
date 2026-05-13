@@ -2,17 +2,23 @@ use bevy::{input::mouse::MouseWheel, prelude::*};
 
 pub struct GamePlugin;
 
+#[derive(Component)]
+pub struct YSort {
+    pub z: f32,
+}
+
 const SPEED: f32 = 500.0;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Startup, setup_camera)
-            .add_systems(Update, (pan_map, zoom_map));
+            .add_systems(Update, (pan_map, zoom_map))
+            .add_systems(Update, y_sort);
     }
 }
 
 fn setup_camera(mut commands: Commands) {
-    commands.spawn(Camera2d);
+    commands.spawn((Camera2d, MeshPickingCamera));
 }
 
 fn pan_map(
@@ -57,5 +63,11 @@ fn zoom_map(mut q_camera: Query<&mut Projection>, mut scroll_evr: MessageReader<
     for ev in scroll_evr.read() {
         ortho.scale *= 1.0 - ev.y * 0.01;
         ortho.scale = ortho.scale.clamp(0.1, 10.0);
+    }
+}
+
+fn y_sort(mut q: Query<(&mut Transform, &YSort)>) {
+    for (mut tf, ysort) in q.iter_mut() {
+        tf.translation.z = ysort.z - (1.0f32 / (1.0f32 + (2.0f32.powf(-0.01 * tf.translation.y))));
     }
 }

@@ -18,6 +18,10 @@ fn main() {
         .add_plugins(MapPlugin)
         .add_plugins(CardPlugin)
         .add_plugins(DebugPlugin)
+        .insert_resource::<MeshPickingSettings>(MeshPickingSettings {
+            require_markers: true,
+            ..default()
+        })
         .insert_resource::<ClearColor>(ClearColor(Color::BLACK))
         .run();
 }

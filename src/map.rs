@@ -37,10 +37,18 @@ fn setup_map(
     let outline_color = materials.add(Color::linear_rgb(0.4, 0.4, 0.4));
 
     commands
-        .spawn((map_settings, Transform::from_xyz(0., 0., -1.)))
+        .spawn((
+            map_settings,
+            Transform::from_xyz(0., 0., -10.),
+            Pickable::IGNORE,
+        ))
         .with_children(|parent| {
-            parent.spawn((Mesh2d(mesh), MeshMaterial2d(mat_color)));
-            parent.spawn((Mesh2d(mesh_outline), MeshMaterial2d(outline_color)));
+            parent.spawn((Mesh2d(mesh), MeshMaterial2d(mat_color), Pickable::IGNORE));
+            parent.spawn((
+                Mesh2d(mesh_outline),
+                MeshMaterial2d(outline_color),
+                Pickable::IGNORE,
+            ));
         });
 }
 
