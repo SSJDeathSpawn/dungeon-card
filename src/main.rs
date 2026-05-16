@@ -1,4 +1,6 @@
 use bevy::prelude::*;
+use bevy_inspector_egui::bevy_egui::EguiPlugin;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 use crate::card::CardPlugin;
 use crate::debug::DebugPlugin;
@@ -15,6 +17,8 @@ fn main() {
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .add_plugins(MeshPickingPlugin)
         .add_plugins(GamePlugin)
+        .add_plugins(EguiPlugin::default())
+        .add_plugins(WorldInspectorPlugin::new())
         .add_plugins(MapPlugin)
         .add_plugins(CardPlugin)
         .add_plugins(DebugPlugin)
